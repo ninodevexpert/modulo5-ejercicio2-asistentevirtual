@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente Virtual Nutricional</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Asistente Virtual Nutricional</h1>
+            <p class="subtitle">Obtén recomendaciones personalizadas para tu plan nutricional diario</p>
+        </header>
+
+        <main>
+            <form id="nutritionForm" class="form">
+                <section class="form-section">
+                    <h2>Datos Personales</h2>
+                    <div class="form-group">
+                        <label for="age">Edad</label>
+                        <input type="number" id="age" name="age" min="1" max="120" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Peso (kg)</label>
+                        <input type="number" id="weight" name="weight" min="1" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Altura (cm)</label>
+                        <input type="number" id="height" name="height" min="50" max="250" required>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h2>Estilo de Vida</h2>
+                    <div class="form-group">
+                        <label for="activityLevel">Nivel de Actividad</label>
+                        <select id="activityLevel" name="activityLevel" required>
+                            <option value="">Selecciona tu nivel de actividad</option>
+                            <option value="sedentary">Sedentario (poco o ningún ejercicio)</option>
+                            <option value="light">Ligero (ejercicio ligero 1-3 días/semana)</option>
+                            <option value="moderate">Moderado (ejercicio moderado 3-5 días/semana)</option>
+                            <option value="active">Activo (ejercicio intenso 6-7 días/semana)</option>
+                            <option value="very-active">Muy Activo (ejercicio muy intenso, trabajo físico)</option>
+                        </select>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h2>Preferencias y Restricciones</h2>
+                    <div class="form-group">
+                        <label for="allergies">Alergias e Intolerancias</label>
+                        <textarea id="allergies" name="allergies" rows="3" placeholder="Ej: Lactosa, gluten, frutos secos... (dejar en blanco si no tienes)"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="preferences">Gustos y Preferencias Alimentarias</label>
+                        <textarea id="preferences" name="preferences" rows="3" placeholder="Ej: Prefiero comida mediterránea, no me gusta el pescado..."></textarea>
+                    </div>
+                </section>
+
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    Obtener Plan Nutricional
+                </button>
+            </form>
+
+            <div id="loadingIndicator" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Generando tu plan nutricional personalizado...</p>
+            </div>
+
+            <div id="resultsContainer" class="results hidden">
+                <h2>Tu Plan Nutricional Diario</h2>
+                <div class="meal-plan">
+                    <div class="meal-card" id="breakfast">
+                        <h3>Desayuno</h3>
+                        <div class="meal-content"></div>
+                    </div>
+                    <div class="meal-card" id="lunch">
+                        <h3>Almuerzo</h3>
+                        <div class="meal-content"></div>
+                    </div>
+                    <div class="meal-card" id="snack">
+                        <h3>Merienda</h3>
+                        <div class="meal-content"></div>
+                    </div>
+                    <div class="meal-card" id="dinner">
+                        <h3>Cena</h3>
+                        <div class="meal-content"></div>
+                    </div>
+                </div>
+                <button type="button" class="btn-secondary" id="resetBtn">
+                    Crear Nuevo Plan
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
+
