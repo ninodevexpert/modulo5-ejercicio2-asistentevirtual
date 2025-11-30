@@ -117,7 +117,7 @@ function resetForm() {
 }
 
 // Función principal que maneja el envío del formulario
-function handleFormSubmit(e) {
+async function handleFormSubmit(e) {
     e.preventDefault();
     
     // Recopilar datos del formulario
@@ -126,19 +126,32 @@ function handleFormSubmit(e) {
     // Mostrar indicador de carga
     showLoading();
     
-    // Simular tiempo de carga (simulando llamada a API)
-    setTimeout(() => {
-        // Aquí en el futuro se haría la llamada a la API de OpenAI
-        // Por ahora, usamos datos mock
-        console.log('Datos del formulario recopilados:', formData);
-        console.log('En el futuro, estos datos se usarán para crear el system prompt y llamar a OpenAI API');
+    try {
+        const response = await fetch('/api/get-nutrition-plan', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor');
+        }
+
+        const plan = await response.json();
         
-        // Renderizar plan nutricional con datos mock
-        renderNutritionPlan(mockNutritionPlan);
+        // Renderizar plan nutricional real
+        renderNutritionPlan(plan);
         
         // Mostrar resultados
         showResults();
-    }, 2000); // Simula 2 segundos de carga
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Hubo un error al generar tu plan. Por favor, intenta de nuevo más tarde.');
+        resetForm();
+    }
 }
 
 // Event Listeners
