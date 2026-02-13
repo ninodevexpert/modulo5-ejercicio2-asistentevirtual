@@ -86,7 +86,7 @@ app.post('/api/get-nutrition-plan', async (req, res) => {
             return res.status(500).json({ error: "API Key no configurada en el servidor" });
         }
 
-        const systemPrompt = `Eres un nutricionista experto. Crea un plan de alimentación diario personalizado y saludable.
+        const instructions = `Eres un nutricionista experto. Crea un plan de alimentación diario personalizado y saludable.
         
         Perfil del usuario:
         - Edad: ${age} años
@@ -106,15 +106,14 @@ app.post('/api/get-nutrition-plan', async (req, res) => {
         5. Usa un tono profesional pero motivador en las notas.
         `;
 
-        const completion = await openai.chat.completions.create({
+        // Migrado a Responses API
+        const response = await openai.responses.create({
             model: "gpt-4o-2024-08-06", // Modelo que soporta Structured Outputs
-            messages: [
-                { role: "system", content: systemPrompt },
-                { role: "user", content: "Genera mi plan nutricional para hoy." }
-            ],
-            response_format: {
-                type: "json_schema",
-                json_schema: {
+            instructions: instructions,
+            input: "Genera mi plan nutricional para hoy.",
+            text: {
+                format: {
+                    type: "json_schema",
                     name: "daily_nutrition_plan",
                     strict: true,
                     schema: nutritionSchema
@@ -122,7 +121,8 @@ app.post('/api/get-nutrition-plan', async (req, res) => {
             }
         });
 
-        const plan = JSON.parse(completion.choices[0].message.content);
+        // Extraer el contenido usando la nueva estructura de Responses API
+        const plan = JSON.parse(response.output_text);
         res.json(plan);
 
     } catch (error) {
