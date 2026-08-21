@@ -3,102 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistente Virtual Nutricional</title>
+    <meta name="theme-color" content="#173f35">
+    <title>Nutria · Asistente nutricional</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+    <div class="page-shell">
         <header class="header">
-            <h1>Asistente Virtual Nutricional</h1>
-            <p class="subtitle">Obtén recomendaciones personalizadas para tu plan nutricional diario</p>
+            <a class="brand" href="#" aria-label="Nutria, inicio">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M18.8 5.2C14.2 5.4 10.7 7 8.6 10c-1.8 2.6-1.5 5.8-1.2 7.3M8.1 13.3c2.8-.1 5.5-1.3 7.4-3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        <path d="M6.4 18.8c.8-4.4-.5-7.2-3.2-9.4 4.7-.2 7.1 1.7 7.4 5.7.2 2-1.4 3.6-4.2 3.7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span>nutria</span>
+            </a>
+            <div class="header-badge"><span></span> Asistente nutricional con IA</div>
         </header>
-
         <main>
-            <form id="nutritionForm" class="form">
-                <section class="form-section">
-                    <h2>Datos Personales</h2>
-                    <div class="form-group">
-                        <label for="age">Edad</label>
-                        <input type="number" id="age" name="age" min="1" max="120" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="weight">Peso (kg)</label>
-                        <input type="number" id="weight" name="weight" min="1" step="0.1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="height">Altura (cm)</label>
-                        <input type="number" id="height" name="height" min="50" max="250" required>
-                    </div>
-                </section>
-
-                <section class="form-section">
-                    <h2>Estilo de Vida</h2>
-                    <div class="form-group">
-                        <label for="activityLevel">Nivel de Actividad</label>
-                        <select id="activityLevel" name="activityLevel" required>
-                            <option value="">Selecciona tu nivel de actividad</option>
-                            <option value="sedentary">Sedentario (poco o ningún ejercicio)</option>
-                            <option value="light">Ligero (ejercicio ligero 1-3 días/semana)</option>
-                            <option value="moderate">Moderado (ejercicio moderado 3-5 días/semana)</option>
-                            <option value="active">Activo (ejercicio intenso 6-7 días/semana)</option>
-                            <option value="very-active">Muy Activo (ejercicio muy intenso, trabajo físico)</option>
-                        </select>
-                    </div>
-                </section>
-
-                <section class="form-section">
-                    <h2>Preferencias y Restricciones</h2>
-                    <div class="form-group">
-                        <label for="allergies">Alergias e Intolerancias</label>
-                        <textarea id="allergies" name="allergies" rows="3" placeholder="Ej: Lactosa, gluten, frutos secos... (dejar en blanco si no tienes)"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="preferences">Gustos y Preferencias Alimentarias</label>
-                        <textarea id="preferences" name="preferences" rows="3" placeholder="Ej: Prefiero comida mediterránea, no me gusta el pescado..."></textarea>
-                    </div>
-                </section>
-
-                <button type="submit" class="btn-submit" id="submitBtn">
-                    Obtener Plan Nutricional
-                </button>
-            </form>
-
-            <div id="loadingIndicator" class="loading hidden">
-                <div class="spinner"></div>
-                <p>Generando tu plan nutricional personalizado...</p>
-            </div>
-
-            <div id="resultsContainer" class="results hidden">
-                <h2>Tu Plan Nutricional Diario</h2>
-                <div class="meal-plan">
-                    <div class="meal-card" id="breakfast">
-                        <h3>Desayuno</h3>
-                        <div class="meal-content"></div>
-                    </div>
-                    <div class="meal-card" id="lunch">
-                        <h3>Almuerzo</h3>
-                        <div class="meal-content"></div>
-                    </div>
-                    <div class="meal-card" id="snack">
-                        <h3>Merienda</h3>
-                        <div class="meal-content"></div>
-                    </div>
-                    <div class="meal-card" id="dinner">
-                        <h3>Cena</h3>
-                        <div class="meal-content"></div>
-                    </div>
+            <section class="hero" aria-labelledby="hero-title">
+                <p class="eyebrow">Nutrición que encaja contigo</p>
+                <h1 id="hero-title">Tu día, mejor alimentado.</h1>
+                <p class="subtitle">Cuéntanos un poco sobre ti y prepararemos una propuesta diaria adaptada a tus necesidades y preferencias.</p>
+            </section>
+            <section class="input-card card" aria-labelledby="form-title">
+                <div class="card-heading">
+                    <span class="step-number">01</span>
+                    <div><p class="card-kicker">Empecemos por ti</p><h2 id="form-title">Crea tu perfil nutricional</h2></div>
+                    <span class="time-hint">Solo 1 minuto</span>
                 </div>
-                <button type="button" class="btn-secondary" id="resetBtn">
-                    Crear Nuevo Plan
-                </button>
-            </div>
+                <form id="nutritionForm" class="form">
+                    <section class="form-section">
+                        <div class="section-title">
+                            <span class="section-icon" aria-hidden="true">01</span>
+                            <div><h3>Datos personales</h3><p>La base para personalizar tu plan</p></div>
+                        </div>
+                        <div class="fields-grid fields-grid-three">
+                            <div class="form-group">
+                                <label for="age">Edad</label>
+                                <div class="input-wrap"><input type="number" id="age" name="age" min="1" max="120" placeholder="30" required><span class="input-unit">años</span></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="weight">Peso</label>
+                                <div class="input-wrap"><input type="number" id="weight" name="weight" min="1" step="0.1" placeholder="70" required><span class="input-unit">kg</span></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="height">Altura</label>
+                                <div class="input-wrap"><input type="number" id="height" name="height" min="50" max="250" placeholder="175" required><span class="input-unit">cm</span></div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="form-section">
+                        <div class="section-title">
+                            <span class="section-icon" aria-hidden="true">02</span>
+                            <div><h3>Estilo de vida</h3><p>Tu movimiento también cuenta</p></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="activityLevel">Nivel de actividad</label>
+                            <select id="activityLevel" name="activityLevel" required>
+                                <option value="">Selecciona tu nivel de actividad</option>
+                                <option value="sedentary">Sedentario (poco o ningún ejercicio)</option>
+                                <option value="light">Ligero (ejercicio ligero 1-3 días/semana)</option>
+                                <option value="moderate">Moderado (ejercicio moderado 3-5 días/semana)</option>
+                                <option value="active">Activo (ejercicio intenso 6-7 días/semana)</option>
+                                <option value="very-active">Muy activo (ejercicio muy intenso, trabajo físico)</option>
+                            </select>
+                        </div>
+                    </section>
+                    <section class="form-section">
+                        <div class="section-title">
+                            <span class="section-icon" aria-hidden="true">03</span>
+                            <div><h3>Preferencias</h3><p>Los detalles que hacen el plan tuyo</p></div>
+                        </div>
+                        <div class="fields-grid fields-grid-two">
+                            <div class="form-group">
+                                <label for="allergies">Alergias e intolerancias <span>Opcional</span></label>
+                                <textarea id="allergies" name="allergies" rows="3" placeholder="Ej. lactosa, gluten, frutos secos..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="preferences">Gustos alimentarios <span>Opcional</span></label>
+                                <textarea id="preferences" name="preferences" rows="3" placeholder="Ej. dieta mediterránea, sin pescado..."></textarea>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="form-footer">
+                        <p><span aria-hidden="true">✦</span> Tu información solo se usa para crear este plan.</p>
+                        <button type="submit" class="btn-submit" id="submitBtn">Crear mi plan <span class="button-arrow" aria-hidden="true">→</span></button>
+                    </div>
+                </form>
+                <div id="loadingIndicator" class="loading hidden" aria-live="polite">
+                    <div class="loader-visual" aria-hidden="true"><span class="loader-orbit"></span><span class="loader-leaf">✦</span></div>
+                    <p class="loading-title">Diseñando tu plan</p>
+                    <p>Estamos combinando tus preferencias para crear un día equilibrado.</p>
+                    <div class="loading-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+                </div>
+            </section>
+            <section id="resultsContainer" class="results result-card card hidden" aria-labelledby="results-title">
+                <div class="result-heading">
+                    <div><p class="eyebrow">Tu propuesta personalizada</p><h2 id="results-title">Un día rico, fácil y equilibrado.</h2></div>
+                    <span class="result-badge"><span>✓</span> Plan listo</span>
+                </div>
+                <div class="meal-plan">
+                    <article class="meal-card meal-breakfast" id="breakfast">
+                        <div class="meal-heading"><span class="meal-icon" aria-hidden="true">☀</span><div><p>Buenos días</p><h3>Desayuno</h3></div></div>
+                        <div class="meal-content"></div>
+                    </article>
+                    <article class="meal-card meal-lunch" id="lunch">
+                        <div class="meal-heading"><span class="meal-icon" aria-hidden="true">◒</span><div><p>Mediodía</p><h3>Almuerzo</h3></div></div>
+                        <div class="meal-content"></div>
+                    </article>
+                    <article class="meal-card meal-snack" id="snack">
+                        <div class="meal-heading"><span class="meal-icon" aria-hidden="true">◇</span><div><p>Media tarde</p><h3>Merienda</h3></div></div>
+                        <div class="meal-content"></div>
+                    </article>
+                    <article class="meal-card meal-dinner" id="dinner">
+                        <div class="meal-heading"><span class="meal-icon" aria-hidden="true">☾</span><div><p>Para terminar</p><h3>Cena</h3></div></div>
+                        <div class="meal-content"></div>
+                    </article>
+                </div>
+                <div class="result-footer">
+                    <p>Este plan es orientativo y no sustituye el consejo de un profesional sanitario.</p>
+                    <button type="button" class="btn-secondary" id="resetBtn"><span aria-hidden="true">↻</span> Crear otro plan</button>
+                </div>
+            </section>
         </main>
+        <footer class="footer"><span>nutria</span> · Pequeños hábitos, grandes cambios.</footer>
     </div>
-
     <script src="js/app.js"></script>
 </body>
 </html>
-

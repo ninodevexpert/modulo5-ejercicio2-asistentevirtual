@@ -1,48 +1,3 @@
-// Datos de ejemplo (mock) para mostrar resultados
-const mockNutritionPlan = {
-    breakfast: {
-        title: "Desayuno",
-        items: [
-            "Avena integral (60g) con leche de almendras (200ml)",
-            "Plátano (1 unidad mediana)",
-            "Nueces (15g)",
-            "Té verde o café sin azúcar"
-        ],
-        notes: "Rico en fibra y proteínas para mantenerte saciado hasta el almuerzo."
-    },
-    lunch: {
-        title: "Almuerzo",
-        items: [
-            "Pechuga de pollo a la plancha (150g)",
-            "Arroz integral (80g cocido)",
-            "Ensalada mixta con tomate, lechuga y pepino (150g)",
-            "Aceite de oliva virgen extra (1 cucharada)",
-            "Agua o infusión"
-        ],
-        notes: "Combinación equilibrada de proteínas, carbohidratos complejos y vegetales."
-    },
-    snack: {
-        title: "Merienda",
-        items: [
-            "Yogur griego natural (125g)",
-            "Fresas frescas (100g)",
-            "Semillas de chía (10g)"
-        ],
-        notes: "Snack ligero y nutritivo para mantener los niveles de energía."
-    },
-    dinner: {
-        title: "Cena",
-        items: [
-            "Salmón al horno (120g)",
-            "Brócoli al vapor (150g)",
-            "Quinoa cocida (60g)",
-            "Aguacate (50g)",
-            "Infusión digestiva"
-        ],
-        notes: "Cena ligera rica en omega-3 y proteínas de alta calidad."
-    }
-};
-
 // Referencias a elementos del DOM
 const form = document.getElementById('nutritionForm');
 const submitBtn = document.getElementById('submitBtn');
@@ -75,17 +30,21 @@ function renderNutritionPlan(plan) {
         const mealCard = document.getElementById(meal.id);
         const mealContent = mealCard.querySelector('.meal-content');
         
-        let html = '<ul>';
+        const itemsList = document.createElement('ul');
+
         meal.data.items.forEach(item => {
-            html += `<li>${item}</li>`;
+            const listItem = document.createElement('li');
+            listItem.textContent = item;
+            itemsList.appendChild(listItem);
         });
-        html += '</ul>';
+
+        mealContent.replaceChildren(itemsList);
         
         if (meal.data.notes) {
-            html += `<p style="margin-top: 12px; font-style: italic; color: var(--text-secondary);">${meal.data.notes}</p>`;
+            const notes = document.createElement('p');
+            notes.textContent = meal.data.notes;
+            mealContent.appendChild(notes);
         }
-        
-        mealContent.innerHTML = html;
     });
 }
 
@@ -135,21 +94,21 @@ async function handleFormSubmit(e) {
             body: JSON.stringify(formData)
         });
 
-        if (!response.ok) {
-            throw new Error('Error en la respuesta del servidor');
-        }
+        const payload = await response.json().catch(() => ({}));
 
-        const plan = await response.json();
+        if (!response.ok) {
+            throw new Error(payload.error || 'Error en la respuesta del servidor');
+        }
         
         // Renderizar plan nutricional real
-        renderNutritionPlan(plan);
+        renderNutritionPlan(payload);
         
         // Mostrar resultados
         showResults();
 
     } catch (error) {
         console.error('Error:', error);
-        alert('Hubo un error al generar tu plan. Por favor, intenta de nuevo más tarde.');
+        alert(error.message || 'Hubo un error al generar tu plan. Por favor, intenta de nuevo más tarde.');
         resetForm();
     }
 }
@@ -157,4 +116,3 @@ async function handleFormSubmit(e) {
 // Event Listeners
 form.addEventListener('submit', handleFormSubmit);
 resetBtn.addEventListener('click', resetForm);
-
